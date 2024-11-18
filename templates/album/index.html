@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <div class="container mt-3 mb-3">
+    <h1 class="display-4">{% block title %}All Albums{% endblock %}</h1>
+    {% if current_user.role=='creator' %}
+      <a href="{{ url_for('album.create_album') }}" class="btn btn-primary">Add Album</a>
+    {% endif %}
+  </div>
+{% endblock %}
+
+{% block content %}
+  <div class="container mt-3">
+    <form method="GET" class="mb-3">
+      <div class="input-group">
+        <input type="text" class="form-control" name="search" id="search" required>
+        <button type="submit" class="btn btn-primary">Search</button>
+      </div>
+    </form>
+    {% if albums|length > 0 %}
+      {% for album in albums %}
+        <div class="card mb-3">
+          <div class="card-body">
+            <h2 class="card-title">{{ album['title'] }}</h2>
+            <h3 class="card-subtitle mb-2 text-muted">{{ album['genre'] }}</h3>
+            <div class="about">by {{ album['username'] }} on {{ album['created'].strftime('%Y-%m-%d') }}</div>
+            <a href="{{ url_for('album.songs_album', id=album['album_id']) }}" class="btn btn-primary">See Songs</a>
+            {% if current_user.id == album['creator_id']  %}
+              <a href="{{ url_for('album.update_album', id=album['album_id']) }}" class="btn btn-secondary">Edit</a>
+            {% endif %} 
+          </div>
+        </div>
+        {% if not loop.last %}
+          <hr>
+        {% endif %}
+      {% endfor %}
+    {% else %}
+      <h2>No albums available</h2>
+    {% endif %}
+  </div>
+{% endblock %}

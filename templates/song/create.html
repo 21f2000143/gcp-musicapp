@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <div class="container mt-3 mb-3">
+    <h1 class="display-4">{% block title %}New Song{% endblock %}</h1>
+  </div>
+{% endblock %}
+
+{% block content %}
+  <div class="container mt-3">
+    <form method="post" enctype="multipart/form-data" class="mb-3">
+      <div class="mb-3">
+        <label for="title" class="form-label">Title</label>
+        <input type="text" class="form-control" name="title" id="title" value="{{ request.form['title'] }}" required>
+      </div>
+      <div class="mb-3">
+        <label for="audio_file" class="form-label">Upload</label>
+        <input type="file" class="form-control" name="audio_file" id="audio_file" required>
+      </div>
+      <div class="mb-3">
+        <label for="album_id" class="form-label">Choose an album:</label>
+        <select class="form-select" name="album_id" id="album_id" required>
+          <option value="" selected></option>
+          {% for album in albums %}
+            <option value="{{album['album_id']}}">{{album['title']}}</option>
+          {% endfor %}      
+        </select>
+      </div>
+      <div class="mb-3">
+        <label for="lyrics" class="form-label">Lyrics</label>
+        <textarea class="form-control" name="lyrics" id="lyrics">{{ request.form['body'] }}</textarea>
+      </div>
+      <button type="submit" class="btn btn-primary">Save</button>
+    </form>
+  </div>
+{% endblock %}

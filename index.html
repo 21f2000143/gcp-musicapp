@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Syntax Highlighting with Torchlight</title>
+  <!-- Torchlight CSS for syntax highlighting -->
+  <link rel="stylesheet" href="https://unpkg.com/@torchlight.dev/torchlight@latest/dist/torchlight.min.css">
+  <!-- Optional custom styles -->
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+    pre {
+      padding: 15px;
+      background-color: #f5f5f5;
+      border-radius: 5px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Code Highlighting Example with Torchlight</h1>
+
+  <h2>Python Code</h2>
+  <pre class="torchlight" data-language="python">
+def greet(name):
+    print(f"Hello, {name}!")
+    
+greet("World")
+  </pre>
+
+  <h2>JavaScript Code</h2>
+  <pre class="torchlight" data-language="javascript">
+function greet(name) {
+    console.log(`Hello, ${name}!`);
+}
+
+greet("World");
+  </pre>
+
+  <!-- Torchlight JavaScript for rendering highlighted code -->
+  <script src="https://unpkg.com/@torchlight.dev/torchlight@latest/dist/torchlight.min.js"></script>
+
+</body>
+</html>

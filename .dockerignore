@@ -1,0 +1,7 @@
+.env
+__pycache__
+*.pyc
+"MAD1 report.md"
+project-features.md
+README.md
+.gitignore

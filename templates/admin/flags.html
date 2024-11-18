@@ -1,0 +1,42 @@
+{% extends 'song/index.html' %}
+{% block datatable %}
+  <div class="container mt-3">
+    <a href="{{ url_for('song.index') }}" class="btn btn-primary">Go Back</a>
+    <div class="table-responsive mt-3">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Flag ID</th>
+            <th>Song ID</th>
+            <th>Creator ID</th>
+            <th>Type</th>
+            <th>Reason</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for flag in flags %}
+            <tr>
+              <td>{{ flag['flag_id'] }}</td>
+              {% if flag['song_id'] %}
+                <td><a href="{{ url_for('admin.index_songs') }}">{{ flag['song_id'] }}</a></td>
+              {% else %}
+                <td>NA</td>
+              {% endif %}
+              {% if flag['creator_id'] %}
+                <td><a href="{{ url_for('admin.index_creators') }}">{{ flag['creator_id'] }}</a></td>
+              {% else %}
+                <td>NA</td>
+              {% endif %}
+              <td>{{ flag['type'] }}</td>
+              <td>{{ flag['reason'] }}</td>
+              <td>
+                <a href="{{ url_for('admin.remove_flag', id=flag['flag_id']) }}" class="btn btn-danger" style="color: white;">Remove</a>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+{% endblock %}

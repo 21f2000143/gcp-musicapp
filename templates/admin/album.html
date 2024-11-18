@@ -1,0 +1,34 @@
+{% extends 'song/index.html' %}
+{% block datatable %}
+  <div class="container mt-3">
+    <a href="{{ url_for('song.index') }}" class="btn btn-primary">Go Back</a>
+    <div class="table-responsive mt-3">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Title</th>
+            <th>Genre</th>
+            <th>Creator ID</th>
+            <th>Created</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for album in albums %}
+            <tr>
+              <td>{{ album['album_id'] }}</td>
+              <td>{{ album['title'] }}</td>
+              <td>{{ album['genre'] }}</td>
+              <td>{{ album['creator_id'] }}</td>
+              <td>{{ album['created'] }}</td>
+              <td>
+                <a href="{{ url_for('album.delete_album', id=album['album_id']) }}" class="btn btn-danger">Remove</a>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+{% endblock %}

@@ -1,0 +1,32 @@
+{% extends 'song/index.html' %}
+{% block datatable %}
+  <div class="container mt-3 w-50">
+    <a href="{{ url_for('song.index') }}" class="btn btn-primary">Go Back</a>
+    <div class="card text-center">
+      <div class="card-header">
+        You can click on toggle button to disable and enable the chart
+      </div>
+      <div class="card-body">
+        <h1>Total Data Chart</h1>
+        <canvas id="myChart" width="400" height="190"></canvas>
+    
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                fetch('/chart-data')
+                    .then(response => response.json())
+                    .then(data => {
+                        var ctx = document.getElementById('myChart').getContext('2d');
+                        var myChart = new Chart(ctx, {
+                            type: 'bar',
+                            data: data,
+                        });
+                    });
+            });
+        </script>
+      </div>
+      <div class="card-footer text-body-secondary">
+        2 days ago
+      </div>
+    </div>
+  </div>
+{% endblock %}

@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <div class="container mt-3 mb-3">
+    <h1 class="display-4">{% block title %}Report Content{% endblock %}</h1>
+  </div>
+{% endblock %}
+
+{% block content %}
+  <div class="container mt-3">
+    <form method="post" action="/report/content/{{ id }}">
+      <div class="mb-3">
+        <label for="title" class="form-label">Title of song</label>
+        <input type="text" class="form-control" name="title" id="title" required>
+      </div>
+      <div class="mb-3">
+        <label for="reason" class="form-label">Reason</label>
+        <textarea class="form-control" name="reason" id="reason" rows="4" required></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary">Submit Report</button>
+    </form>
+  </div>
+{% endblock %}

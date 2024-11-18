@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+
+{% block title %}
+  {% if g.owner %}
+    Admin Dashboard
+  {% else %}
+    {% if album %}
+      {{ album['title'] }}
+    {% elif playlist %}
+      {{ playlist['title'] }}
+    {% else %}
+      New Release
+    {% endif %}
+  {% endif %}
+{% endblock %}
+
+{% block header %}
+  <div class="container mt-3 mb-3">
+    {% if g.owner %}
+      <h1 class="display-4">Admin Dashboard</h1>
+    {% else %}
+      {% if album %}
+        <h1 class="display-4">{{ album['title'] }}</h1>
+      {% elif playlist %}
+        <h1 class="display-4">{{ playlist['title'] }}</h1>
+      {% else %}
+        <h1 class="display-4">New Release</h1>
+      {% endif %}
+    {% endif %}
+    {% if current_user.role == 'creator' %}
+      <a class="btn btn-primary" href="{{ url_for('song.create') }}">Add Song</a>
+    {% endif %}
+  </div>
+{% endblock %}
+
+{% block content %}
+  <div class="container mt-3">
+    <form method="GET" class="mb-3">
+      <div class="input-group">
+        <input type="text" class="form-control" id="search" name="search" placeholder="Search" required>
+        <button type="submit" class="btn btn-primary">Search</button>
+      </div>
+    </form>
+
+    {% if current_user.role == 'admin' %}
+      <div class="d-flex justify-content-between mb-3">
+        <a class="btn btn-outline-primary" href="{{url_for('admin.index_users')}}">Users</a>
+        <a class="btn btn-outline-primary" href="{{url_for('admin.index_creators')}}">Creators</a>
+        <a class="btn btn-outline-primary" href="{{url_for('admin.index_songs')}}">Songs</a>
+        <a class="btn btn-outline-primary" href="{{url_for('admin.index_albums')}}">Albums</a>
+        <a class="btn btn-outline-primary" href="{{url_for('admin.index_flags')}}">Flagged Content</a>
+        <a class="btn btn-outline-primary" href="{{url_for('admin.admin_chart')}}">View Chart</a>
+      </div>
+      <div class="post">
+        {% block datatable %}{% endblock %}
+      </div>
+    {% else %}
+      {% if songs|length > 0 %}
+        {% for song in songs %}
+          <div class="card mb-3">
+            <div class="card-body">
+              <h5 class="card-title">{{ song['title'] }}</h5>
+              <p class="card-text">by {{ song['username'] }} on {{ song['created'].strftime('%Y-%m-%d') }}</p>
+              <a href="{{ url_for('song.current_song', song_id=song['song_id']) }}" class="btn btn-primary">Play</a>
+              {% if current_user.id == song['creator_id'] %}
+                <a href="{{url_for('song.update', id=song['song_id'])}}" class="btn btn-secondary">Edit</a>
+              {% endif %} 
+              {% if playlist %}
+                <a href="{{ url_for('playlist.remove_from', song_id = song['song_id'], playlist_id=playlist['playlist_id']) }}" class="btn btn-danger">Remove</a>
+              {% else %}
+                <a href="{{url_for('song.add_to_playlist', id=song['song_id'])}}" class="btn btn-success">Add to Playlist</a>
+              {% endif %}
+            </div>
+          </div>
+        {% endfor %}
+      {% else %}
+        <h1>No songs available</h1>
+      {% endif %}
+    {% endif %}
+  </div>
+{% endblock %}

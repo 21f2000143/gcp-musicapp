@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <div class="container mt-3 mb-3">
+    <h1 class="display-4">{% block title %}Admin Log In{% endblock %}</h1>
+  </div>
+{% endblock %}
+
+{% block content %}
+  <div class="container mt-3">
+    <form method="post">
+      <div class="mb-3">
+        <label for="username" class="form-label">Username</label>
+        <input type="text" class="form-control" name="username" id="username" required>
+      </div>
+      <div class="mb-3">
+        <label for="password" class="form-label">Password</label>
+        <input type="password" class="form-control" name="password" id="password" required>
+      </div>
+      <button type="submit" class="btn btn-primary">Log In</button>
+    </form>
+  </div>
+{% endblock %}

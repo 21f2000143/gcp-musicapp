@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <div class="container mt-3">
+    <article class="card mb-3">
+      <div class="card-body">
+        <a href="{{ url_for('song.index') }}" class="btn btn-primary">Go back</a>
+        <header class="mt-3">
+          <div>
+            <h1 class="card-title">
+              {{ song['title'] }}
+              <a href="/report/content/{{song['song_id']}}" style="color: red;">report</a>
+            </h1>
+            <div class="about">by {{ song['username'] }} on {{ song['created'].strftime('%Y-%m-%d') }} <a href="#" style="color: red;">report</a></div>
+            <audio controls class="mt-3">
+              <source src="{{ url_for('song.play_audio', song_id=song['song_id']) }}" type="audio/mp3">
+            </audio>
+          </div>
+          {% if like %}
+            <a class="btn btn-danger">
+              <i class="fa-solid fa-heart"></i>
+            </a>
+          {% else %}
+            <a href="{{url_for('song.like', id=song['song_id'])}}" class="btn btn-outline-danger">
+              <span class="fa-regular fa-heart"></span>
+            </a>
+          {% endif %}
+          <a href="{{url_for('song.add_to_playlist', id=song['song_id'])}}" class="btn btn-outline-primary">Add to Playlist</a>
+        </header>
+        {% if song['lyrics'] %}
+          <i><p>{{song['lyrics']}}</p></i>
+        {% endif %}
+      </div>
+    </article>
+  </div>
+{% endblock %}

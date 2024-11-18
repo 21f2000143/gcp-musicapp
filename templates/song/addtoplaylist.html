@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <div class="container mt-3 mb-3">
+    <h1 class="display-4">{% block title %}{{ song['title'] }}{% endblock %}</h1>
+  </div>
+{% endblock %}
+
+{% block content %}
+  <div class="container mt-3">
+    {% if playlists|length > 0 %}
+      {% for playlist in playlists %}
+        <div class="card mb-3">
+          <div class="card-body">
+            <h2 class="card-title">{{ playlist['title'] }}</h2>
+            <a href="{{ url_for('playlist.add_here', song_id = song['song_id'], playlist_id=playlist['playlist_id']) }}" class="btn btn-primary">Add here</a>
+          </div>
+        </div>
+        {% if not loop.last %}
+          <hr>
+        {% endif %}
+      {% endfor %}
+    {% else %}
+      <h2>No playlists available</h2>
+    {% endif %}
+  </div>
+{% endblock %}

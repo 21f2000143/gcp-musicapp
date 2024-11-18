@@ -1,0 +1,34 @@
+{% extends 'song/index.html' %}
+{% block datatable %}
+  <div class="container mt-3">
+    <a href="{{ url_for('song.index') }}" class="btn btn-primary">Go Back</a>
+    <div class="table-responsive mt-3">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Username</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for creator in creators %}
+            <tr>
+              <td>{{ creator['id'] }}</td>
+              <td>{{ creator['username'] }}</td>
+              {% if creator['isblocked'] == 0 %}
+                <td>
+                  <a href="{{ url_for('auth.creator_block', id=creator['id']) }}" class="btn btn-danger" onclick="return confirm('Are you sure?');">Block</a>
+                </td>
+              {% else %}
+                <td>
+                  <a href="{{ url_for('auth.creator_unblock', id=creator['id']) }}" class="btn btn-success" onclick="return confirm('Are you sure?');">Unblock</a>
+                </td>
+              {% endif %}
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+{% endblock %}
